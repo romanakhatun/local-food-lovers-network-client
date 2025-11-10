@@ -1,2 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: light --default;
+}
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #004b1a;
+  --color-primary-content: #c4ff88;
+  --color-secondary: #ffd156;
+  --color-secondary-content: #f9f3e7;
+  --color-neutral: #100f0b;
+  --color-base-100: #ffffffb3;
+  --color-base-content: #292f2b;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.font-garamond {
+  font-family: "EB Garamond", serif;
+}
+
+.drawer-side > .drawer-overlay {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.btn-primary {
+  @apply bg-primary-content text-[15px] text-primary px-[19px] py-2 rounded-xl hover:bg-primary hover:text-primary-content shadow-none transition-all duration-200;
+}
+
+/* Common Style */
+@layer components {
+  .footer-heading {
+    @apply text-[20px] font-medium mb-2 text-white;
+  }
+  .section-heading {
+    @apply text-5xl font-bold text-center mb-5;
+  }
+  .section-text {
+    @apply text-gray-600 leading-relaxed max-w-3xl mx-auto text-center;
+  }
+
+  .card-common {
+    @apply bg-base-100 shadow-lg rounded-2xl p-4 hover:shadow-xl transition-all duration-300;
+  }
+  .social-icon {
+    @apply w-9 h-9 flex items-center text-base-100 border border-base-100 justify-center rounded-full transition-colors duration-200 hover:bg-primary-content hover:text-primary hover:border-primary;
+  }
+}
