@@ -21,8 +21,8 @@ const Navbar = () => {
         to={to}
         onClick={() => (document.getElementById(drawerId).checked = false)}
         className={({ isActive }) =>
-          `text-[15px] font-medium text-base-content block px-4 py-3 hover:bg-secondary-content rounded-lg transition-colors duration-200 ${
-            isActive ? "text-primary font-semibold" : ""
+          `text-base font-medium text-base-content block px-[15px] py-2.3 hover:bg-primary-content rounded-lg transition-colors duration-200 ${
+            isActive ? "bg-primary-content" : ""
           }`
         }
       >
@@ -61,10 +61,16 @@ const Navbar = () => {
             </div>
 
             <div className="navbar-end flex gap-3">
-              <Link to="/login" className="btn-primary border-0">
+              <Link
+                to="/login"
+                className="btn-primary  px-[19px] py-2 border-0"
+              >
                 Login
               </Link>
-              <Link to="/register" className="btn-primary border-0">
+              <Link
+                to="/register"
+                className="btn-primary px-[19px] py-2 border-0"
+              >
                 Register
               </Link>
             </div>

@@ -28,7 +28,7 @@ body {
 }
 
 .btn-primary {
-  @apply bg-primary-content text-[15px] text-primary px-[19px] py-2 rounded-xl hover:bg-primary hover:text-primary-content shadow-none transition-all duration-200;
+  @apply bg-primary-content text-[15px] text-primary rounded-xl hover:bg-primary hover:text-white shadow-none transition-all duration-200;
 }
 
 .btn-secondary {
