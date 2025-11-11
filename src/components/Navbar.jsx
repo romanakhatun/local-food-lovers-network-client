@@ -3,6 +3,8 @@ import { HiOutlineBars3 } from "react-icons/hi2";
 import { TfiClose } from "react-icons/tfi";
 import { BsPersonCircle } from "react-icons/bs";
 import logo from "../assets/logo.svg";
+import { use } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 // Define the navigation items
 const navLinks = [
@@ -17,10 +19,10 @@ const userLinks = [
   { name: "Add Review", path: "/add-review" },
   { name: "My Reviews", path: "/my-reviews" },
   { name: "My Favorites", path: "/my-favorites" },
-  { name: "Logout", path: "/logout" }, // Logout link
 ];
 
 const Navbar = () => {
+  const { user, signOutUser } = use(AuthContext);
   const drawerId = "mobile-menu-drawer";
 
   const NavItem = ({ to, children }) => (
@@ -70,46 +72,68 @@ const Navbar = () => {
             </div>
 
             <div className="navbar-end flex gap-3">
-              <Link
-                to="/login"
-                className="btn-primary  px-[19px] py-2 border-0"
-              >
-                Login
-              </Link>
-              <Link
-                to="/register"
-                className="btn-primary px-[19px] py-2 border-0"
-              >
-                Register
-              </Link>
-
               {/* dropdown trigger */}
-              <div className="dropdown dropdown-end">
-                <div tabIndex={0} role="button" className="cursor-pointer m-1">
-                  <BsPersonCircle className="" size={40} />
-                </div>
+              {user ? (
+                <div className="dropdown dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="cursor-pointer m-1"
+                  >
+                    {user?.photoURL ? (
+                      <img
+                        className="aspect-square object-cover rounded-full h-12 border-5 border-[#dfdfdf]"
+                        src={user.photoURL}
+                        alt="photo"
+                      />
+                    ) : (
+                      <BsPersonCircle size={40} />
+                    )}
+                  </div>
 
-                {/* dropdown content */}
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu bg-white rounded-box z-10 w-52 p-2 shadow-lg flex flex-col gap-1"
-                >
-                  {userLinks.map((link) => (
-                    <li key={link.name}>
-                      <NavLink
-                        to={link.path}
-                        className={({ isActive }) =>
-                          `text-base-content block px-[15px] py-2.3 hover:bg-primary-content rounded-lg transition-colors duration-200 ${
-                            isActive ? "bg-primary-content" : ""
-                          }`
-                        }
-                      >
-                        {link.name}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                  {/* dropdown content */}
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content menu bg-white rounded-box z-10 w-52 px-2 py-4 border shadow-lg flex flex-col gap-1"
+                  >
+                    {userLinks.map((link) => (
+                      <li key={link.name}>
+                        <NavLink
+                          to={link.path}
+                          className={({ isActive }) =>
+                            `text-base-content block px-[15px] py-2.3 hover:bg-primary-content rounded-lg transition-colors duration-200 ${
+                              isActive ? "bg-primary-content" : ""
+                            }`
+                          }
+                        >
+                          {link.name}
+                        </NavLink>
+                      </li>
+                    ))}
+                    <span
+                      className="py-2 cursor-pointer border rounded-xl text-center"
+                      onClick={() => signOutUser()}
+                    >
+                      Log out
+                    </span>
+                  </ul>
+                </div>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="btn-primary  px-[19px] py-2 border-0"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="btn-primary px-[19px] py-2 border-0"
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

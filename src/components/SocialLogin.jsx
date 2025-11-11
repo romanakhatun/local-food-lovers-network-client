@@ -1,8 +1,18 @@
-import React from "react";
+import { use } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { AuthContext } from "../context/AuthContext";
 
 const SocialLogin = () => {
-  const handleGoogleSignIn = () => {};
+  const { signInGoogleUser } = use(AuthContext);
+  const handleGoogleSignIn = () => {
+    signInGoogleUser()
+      .then((result) => {
+        console.log("google signin", result.user);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
   return (
     <div>
       <button

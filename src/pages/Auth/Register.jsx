@@ -3,10 +3,74 @@ import SocialLogin from "../../components/SocialLogin";
 import PageHeader from "../../components/PageHeader";
 import FormInput from "../../components/FormInput";
 import PasswordForm from "../../components/PasswordForm";
+import { use, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { updateProfile } from "firebase/auth";
 
 const Register = () => {
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const { createUser } = use(AuthContext);
+
+  // reusable error & success function
+  const showError = (message, duration = 5000) => {
+    setError(message);
+    setTimeout(() => setError(""), duration);
+  };
+  const showSuccess = (message, duration = 5000) => {
+    setSuccess(message);
+    setTimeout(() => setSuccess(""), duration);
+  };
+
   const handleRegister = (e) => {
     e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const name = e.target.name.value;
+    const photo = e.target.photo.value;
+    const terms = e.target.terms.checked;
+    console.log(email, name, password, photo, terms);
+
+    const pass6Pattern = /^.{6,}$/;
+    const passUpperCasePattern = /(?=.*[A-Z])/;
+    const passLowerCasePattern = /(?=.*[a-z])/;
+    // Password Validation
+    if (!pass6Pattern.test(password)) {
+      showError("Minimum 6 characters required");
+      return;
+    }
+    if (!passUpperCasePattern.test(password)) {
+      showError("Missing uppercase letter.");
+      return;
+    }
+    if (!passLowerCasePattern.test(password)) {
+      showError("Missing lowercase letter.");
+      return;
+    }
+    // Accept Terms and Condition
+    if (!terms) {
+      showError("You must accept the Terms & Conditions.");
+      return;
+    }
+
+    createUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+        showSuccess("Registration Successful");
+
+        //update profile
+        const profile = {
+          displayName: name,
+          photoURL: photo,
+        };
+        updateProfile(result.user, profile);
+      })
+      .catch((err) => {
+        console.log(err);
+        showError(err.message || "Registration Failed");
+      });
+
+    console.log("register submitted");
   };
   return (
     <section className="border-t border-black">
@@ -14,6 +78,24 @@ const Register = () => {
 
       <div className="max-w-xl mx-auto my-15">
         <form onSubmit={handleRegister}>
+          {error && (
+            <div
+              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm"
+              role="alert"
+            >
+              <p className="font-semibold">Registration Error:</p>
+              <p>{error}</p>
+            </div>
+          )}
+          {success && (
+            <div
+              className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6 text-sm"
+              role="alert"
+            >
+              <p className="font-semibold">{success}</p>
+            </div>
+          )}
+
           <h3 className="font-garamond text-2xl text-base-content font-medium  mb-3">
             Register
           </h3>
@@ -71,7 +153,7 @@ const Register = () => {
         </div>
 
         <SocialLogin />
-
+        {/* {error} */}
         {/* Login Link */}
         <p className="text-center text-sm">
           Have an account?{" "}
