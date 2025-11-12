@@ -1,42 +1,51 @@
-import { Link } from "react-router";
 import PageHeader from "../../components/PageHeader";
-import { FaEdit, FaTrash } from "react-icons/fa";
-
-// --- Dummy Data ---
-const userReviews = [
-  {
-    id: 101,
-    image:
-      "https://www.themetechmount.com/bitehub/wp-content/uploads/2024/04/foodmenu-01.jpg",
-    name: "Spicy Tandoori Pizza",
-    restaurant: "Pizza Palace Central",
-    date: "2025-11-05",
-  },
-  {
-    id: 102,
-    image:
-      "https://www.themetechmount.com/bitehub/wp-content/uploads/2024/04/foodmenu-01.jpg",
-    name: "Classic Butter Chicken",
-    restaurant: "The Punjabi Grill",
-    date: "2025-10-28",
-  },
-  {
-    id: 103,
-    image:
-      "https://www.themetechmount.com/bitehub/wp-content/uploads/2024/04/foodmenu-01.jpg",
-    name: "Vegan Power Bowl",
-    restaurant: "Green Eats Cafe",
-    date: "2025-09-15",
-  },
-];
+import useAuth from "../../hooks/useAuth";
+import { useEffect, useState } from "react";
+import useAxios from "../../hooks/useAxios";
+import ReviewTable from "../../components/ReviewTable";
+import Swal from "sweetalert2";
 
 const MyReviews = () => {
-  const handleEdit = (id) => {
-    console.log(`Editing review ID: ${id}`);
-  };
+  const [userReviews, setUserReviews] = useState([]);
+  const { user } = useAuth();
+  const axiosInstance = useAxios();
+
+  useEffect(() => {
+    axiosInstance.get(`/my-reviews?email=${user?.email}`).then((data) => {
+      console.log("User data", data);
+      setUserReviews(data.data);
+    });
+  }, [axiosInstance, user]);
 
   const handleDelete = (id) => {
     console.log(`Deleting review ID: ${id}`);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosInstance.delete(`/reviews/${id}`).then((data) => {
+          if (data.data.deletedCount) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your Review has been deleted.",
+              icon: "success",
+            });
+
+            // Remaining Data
+            const remainingUserReviews = userReviews.filter(
+              (review) => review._id !== id
+            );
+            setUserReviews(remainingUserReviews);
+          }
+        });
+      }
+    });
   };
 
   return (
@@ -64,68 +73,11 @@ const MyReviews = () => {
 
             <tbody>
               {userReviews.map((review) => (
-                <tr
-                  key={review.id}
-                  className="hover:bg-gray-50 border-b border-gray-200"
-                >
-                  {/* Image */}
-                  <td>
-                    <div className="avatar">
-                      <div className="w-12 h-12 rounded-lg">
-                        <img
-                          src={review.image}
-                          alt={review.name}
-                          className="object-cover"
-                        />
-                      </div>
-                    </div>
-                  </td>
-
-                  {/*  Name & Restaurant  */}
-                  <td>
-                    <Link
-                      to={`/reviews/${review.id}`}
-                      className="font-semibold text-base-content hover:text-primary"
-                    >
-                      {review.name}
-                    </Link>
-                    <span className="block text-xs text-gray-500 sm:hidden">
-                      @{review.restaurant}
-                    </span>
-                  </td>
-
-                  {/* Restaurant Hidden on small screens */}
-                  <td className="hidden sm:table-cell text-gray-700">
-                    {review.restaurant}
-                  </td>
-
-                  {/* Date (Hidden on medium screens) */}
-                  <td className="hidden md:table-cell text-sm text-gray-500">
-                    {review.date}
-                  </td>
-
-                  {/* Edit Button */}
-                  <td>
-                    <button
-                      onClick={() => handleEdit(review.id)}
-                      className="cursor-pointer text-secondary hover:text-secondary-focus"
-                      title="Edit Review"
-                    >
-                      <FaEdit size={16} />
-                    </button>
-                  </td>
-
-                  {/* Delete Button */}
-                  <td>
-                    <button
-                      onClick={() => handleDelete(review.id)}
-                      className="cursor-pointer text-red-500 hover:text-red-700"
-                      title="Delete Review"
-                    >
-                      <FaTrash size={16} />
-                    </button>
-                  </td>
-                </tr>
+                <ReviewTable
+                  review={review}
+                  key={review._id}
+                  handleDelete={handleDelete}
+                />
               ))}
             </tbody>
           </table>
