@@ -1,16 +1,39 @@
-# React + Vite
+# Local Food Lovers Network
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Site URL:** [https://bitehub2.web.app/](https://bitehub2.web.app/)
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## About the Project
 
-## React Compiler
+**Local Food Lovers Network** is a community-driven MERN stack platform where food enthusiasts can share their experiences about local restaurants, street food, or homemade meals.  
+It connects food lovers to explore, review, and celebrate the rich variety of local flavors.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🍔 **Add & Share Reviews:**  
+  Users can post reviews of their favorite food along with photos and ratings.
+
+- 🏙️ **Discover Local Food Experiences:**  
+  Explore reviews from others to discover hidden local food gems.
+
+- ❤️ **Favorite System:**  
+  Users can save their favorite reviews and manage them easily.
+
+- 🔐 **Secure Authentication:**  
+  Firebase authentication is used to protect user data and provide login/register features.
+
+- 🔍 **Smart Search & Filter:**  
+  Quickly search reviews by food name, restaurant, or reviewer.
+
+---
+
+## Tech Stack
+
+- **Frontend:** React + Vite + TailwindCSS + DaisyUI
+- **Backend:** Node.js + Express.js
+- **Database:** MongoDB
+- **Authentication:** Firebase Auth
+- **API Handling:** Axios + Custom Hook (`useAxios`)
