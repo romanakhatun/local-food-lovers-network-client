@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { FaHeart, FaRegHeart, FaMapMarkerAlt } from "react-icons/fa";
 import { StarRating } from "./StarRating";
 import { useState } from "react";
@@ -12,8 +12,13 @@ const ReviewCard = ({ review, handleRemoveFavorite }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const axiosInstance = useAxios();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const handleAddFavorite = () => {
+    if (!user?.email) {
+      return navigate("/login");
+    }
+
     if (isFavorite) return;
     setIsFavorite(true);
 

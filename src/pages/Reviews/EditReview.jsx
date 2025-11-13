@@ -57,7 +57,7 @@ const EditReview = () => {
         currentPath="Edit Review"
       />
 
-      <div className="max-w-xl mx-auto my-15 py-12 px-4 md:px-0">
+      <div className="max-w-xl mx-auto my-15 px-4 md:px-0">
         <form onSubmit={handleUpdateReview}>
           <h3 className="font-garamond text-2xl text-base-content font-medium mb-3">
             Modify Your Review Submission

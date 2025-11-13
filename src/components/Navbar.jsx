@@ -55,7 +55,7 @@ const Navbar = () => {
               </div>
 
               <Link to="/" className="ml-1 lg:ml-0 order-2">
-                <img className="max-h-10" src={logo} alt="Logo" />
+                <img className="max-h-8 sm:max-h-10" src={logo} alt="Logo" />
               </Link>
             </div>
 

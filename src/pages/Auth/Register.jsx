@@ -71,7 +71,7 @@ const Register = () => {
     <section className="border-t border-black">
       <PageHeader title={"Create Account"} currentPath={"Register"} />
 
-      <div className="max-w-xl mx-auto my-15">
+      <div className="max-w-xl mx-auto my-15 px-4 md:px-0">
         <form onSubmit={handleRegister}>
           {/* reusable messages */}
           <AlertMessage type="error" message={error} />
