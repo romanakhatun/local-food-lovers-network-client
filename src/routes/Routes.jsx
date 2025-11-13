@@ -23,9 +23,7 @@ export const router = createBrowserRouter([
         path: "/review/:id",
         element: <ReviewDetails />,
         loader: ({ params }) =>
-          fetch(
-            `https://local-food-lovers-network-server-sigma.vercel.app/reviews/${params.id}`
-          ),
+          fetch(`http://localhost:3000/reviews/${params.id}`),
       },
       {
         path: "/add-review",
