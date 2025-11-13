@@ -49,12 +49,12 @@ const Navbar = () => {
           <div className="navbar">
             <div className="navbar-start">
               <div className="order-1 lg:hidden">
-                <label htmlFor={drawerId} className="btn btn-ghost">
+                <label htmlFor={drawerId} className="cursor-pointer">
                   <HiOutlineBars3 size={35} />
                 </label>
               </div>
 
-              <Link to="/" className="ml-4 lg:ml-0 order-2">
+              <Link to="/" className="ml-1 lg:ml-0 order-2">
                 <img className="max-h-10" src={logo} alt="Logo" />
               </Link>
             </div>
@@ -138,17 +138,17 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="drawer-side z-50">
+      <div className="drawer-side bg-white w-screen md:w-[50vw] z-50">
         <label
           htmlFor={drawerId}
           aria-label="close sidebar"
-          className="drawer-overlay sm:w-screen md:w-[50vw]"
+          className=""
         ></label>
 
-        <ul className="menu p-4 sm:w-screen md:w-[50vw] min-h-full text-base-content">
-          <div className="flex justify-end mb-4">
+        <ul className="menu p-4 w-screen md:w-[50vw] min-h-full text-base-content">
+          <div className="flex justify-start mb-4">
             <label htmlFor={drawerId} className="btn btn-ghost btn-circle">
-              <TfiClose size={25} />
+              <TfiClose size={25} className="text-black" />
             </label>
           </div>
 
